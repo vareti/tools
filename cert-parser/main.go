@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"io/ioutil"
 	"os"
-	"time"
 
+	"k8s.io/apiserver/pkg/server/dynamiccertificates"
 	"k8s.io/client-go/util/cert"
 )
 
@@ -30,11 +30,7 @@ func main() {
 	fmt.Printf("Found %d certificates in the bundle\n", len(certificates))
 
 	for _, certificate := range certificates {
-		fmt.Printf("Issuer CommonName %s\n", certificate.Issuer.CommonName)
-		fmt.Printf("Subject CommonName %s\n", certificate.Subject.CommonName)
-		fmt.Printf("NotBefore %s\n", certificate.NotBefore.String())
-		fmt.Printf("NotAfter %s\n\n", certificate.NotAfter.String())
+		fmt.Printf("%s\n", dynamiccertificates.GetHumanCertDetail(certificate))
 	}
 
-	fmt.Printf("Current time : %s\n\n", time.Now().UTC())
 }
